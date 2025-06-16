@@ -1,0 +1,15 @@
+页面标题: 无人机motor工厂建设报告
+
+特定内容区域: 处理iframe时出错: Message: 
+
+详细错误:
+Traceback (most recent call last):
+  File "/Users/maxime.xian/Downloads/下载未整理/小李/crawler.py", line 61, in <module>
+    WebDriverWait(driver, 20).until(
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/selenium/webdriver/support/wait.py", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+
+
+完整页面文本:
