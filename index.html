@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>无人机电机工厂规划中心</title>
+    <title>Drone Motor Factory Planning Center</title>
     <style>
         * {
             margin: 0;
@@ -137,6 +137,11 @@
             font-size: 1.1rem;
         }
 
+        .total-row {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
         .timeline {
             background: #f8f9fa;
             padding: 15px;
@@ -248,213 +253,314 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>无人机电机工厂规划中心</h1>
-            <p>交互式设施设计与投资计算器</p>
+            <h1>Drone Motor Factory Planning Center</h1>
+            <p>Interactive Facility Design & Investment Calculator</p>
         </div>
 
         <div class="modules-grid">
-            <!-- 工厂配置模拟器 -->
+            <!-- Factory Configuration Simulator -->
             <div class="module">
-                <h3>🏭 工厂配置模拟器</h3>
+                <h3>🏭 Factory Configuration Simulator</h3>
                 <div class="input-group">
-                    <label>月产量目标 (台):</label>
+                    <label>Monthly Production Target (units):</label>
                     <input type="number" id="productionTarget" value="50000" onchange="updateFactoryConfig()">
                 </div>
                 <div class="input-group">
-                    <label>布局偏好:</label>
+                    <label>Layout Preference:</label>
                     <select id="layoutType" onchange="updateFactoryConfig()">
-                        <option value="single">单层布局</option>
-                        <option value="multi">多层布局</option>
+                        <option value="single">Single Floor Layout</option>
+                        <option value="multi">Multi-Floor Layout</option>
                     </select>
                 </div>
                 
                 <table class="output-table">
                     <tr>
-                        <th>参数</th>
-                        <th>数值</th>
+                        <th>Parameter</th>
+                        <th>Value</th>
                     </tr>
                     <tr>
-                        <td>总面积 (m²)</td>
+                        <td>Total Area (m²)</td>
                         <td id="totalArea">3,500 m²</td>
                     </tr>
                     <tr>
-                        <td>层高 (m)</td>
-                        <td id="ceilingHeight">6.0m (地面), 4.5m+ (上层)</td>
+                        <td>Ceiling Height (m)</td>
+                        <td id="ceilingHeight">6.0m (Ground), 4.5m+ (Upper)</td>
                     </tr>
                     <tr>
-                        <td>电力容量 (kW)</td>
+                        <td>Power Capacity (kW)</td>
                         <td id="powerCapacity">1,650 kW</td>
                     </tr>
                     <tr>
-                        <td>扩展预留</td>
-                        <td id="expansionReserve">700 m² (20% 缓冲)</td>
+                        <td>Expansion Reserve</td>
+                        <td id="expansionReserve">700 m² (20% Buffer)</td>
                     </tr>
                 </table>
                 
                 <div class="alert">
-                    <strong>提示:</strong> 多层布局优化轻量化工艺（装配/测试）在上层，重型机械（CNC）在地面层。
+                    <strong>Tip:</strong> Multi-floor layout optimizes lightweight processes (assembly/testing) on upper floors, heavy machinery (CNC) on ground floor.
                 </div>
             </div>
 
-            <!-- 动态成本估算器 -->
+            <!-- Equipment Configuration -->
             <div class="module">
-                <h3>💰 动态成本估算器</h3>
+                <h3>⚙️ Equipment Configuration</h3>
                 <div class="input-group">
-                    <label>建设地区:</label>
+                    <label>CNC Machine Count:</label>
+                    <input type="number" id="cncCount" value="12" onchange="updateEquipmentConfig()">
+                </div>
+                <div class="input-group">
+                    <label>Assembly Line Count:</label>
+                    <input type="number" id="assemblyLines" value="6" onchange="updateEquipmentConfig()">
+                </div>
+                <div class="input-group">
+                    <label>QC Equipment:</label>
+                    <select id="qcEquipment" onchange="updateEquipmentConfig()">
+                        <option value="basic">Basic Testing</option>
+                        <option value="advanced">High-Precision Testing</option>
+                    </select>
+                </div>
+                
+                <table class="output-table">
+                    <tr>
+                        <th>Equipment Type</th>
+                        <th>Quantity</th>
+                        <th>Unit Price (10k USD)</th>
+                        <th>Subtotal (10k USD)</th>
+                    </tr>
+                    <tr>
+                        <td>CNC Machines</td>
+                        <td id="cncCountDisplay">12</td>
+                        <td>45</td>
+                        <td id="cncTotal">540</td>
+                    </tr>
+                    <tr>
+                        <td>Assembly Lines</td>
+                        <td id="assemblyLinesDisplay">6</td>
+                        <td>25</td>
+                        <td id="assemblyTotal">150</td>
+                    </tr>
+                    <tr>
+                        <td>QC Equipment</td>
+                        <td>1 Set</td>
+                        <td id="qcPrice">80</td>
+                        <td id="qcTotal">80</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="3"><strong>Total Equipment Investment</strong></td>
+                        <td id="equipmentTotal"><strong>770 (10k USD)</strong></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Investment Calculator -->
+            <div class="module">
+                <h3>💰 Investment Calculator</h3>
+                <div class="input-group">
+                    <label>Land Cost (10k USD/m²):</label>
+                    <input type="number" id="landCost" value="0.8" step="0.1" onchange="updateInvestmentCalc()">
+                </div>
+                <div class="input-group">
+                    <label>Construction Cost (10k USD/m²):</label>
+                    <input type="number" id="constructionCost" value="0.3" step="0.1" onchange="updateInvestmentCalc()">
+                </div>
+                <div class="input-group">
+                    <label>Operating Capital (months):</label>
+                    <input type="number" id="operatingMonths" value="6" onchange="updateInvestmentCalc()">
+                </div>
+                
+                <table class="output-table">
+                    <tr>
+                        <th>Investment Item</th>
+                        <th>Amount (10k USD)</th>
+                        <th>Percentage</th>
+                    </tr>
+                    <tr>
+                        <td>Land Cost</td>
+                        <td id="landTotal">2,800</td>
+                        <td id="landPercent">54.9%</td>
+                    </tr>
+                    <tr>
+                        <td>Construction Cost</td>
+                        <td id="constructionTotal">1,050</td>
+                        <td id="constructionPercent">20.6%</td>
+                    </tr>
+                    <tr>
+                        <td>Equipment Cost</td>
+                        <td id="equipmentInvestment">770</td>
+                        <td id="equipmentPercent">15.1%</td>
+                    </tr>
+                    <tr>
+                        <td>Operating Capital</td>
+                        <td id="operatingCapital">480</td>
+                        <td id="operatingPercent">9.4%</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>Total Investment</strong></td>
+                        <td id="totalInvestment"><strong>5,100 (10k USD)</strong></td>
+                        <td><strong>100%</strong></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Dynamic Cost Estimator -->
+            <div class="module">
+                <h3>💰 Dynamic Cost Estimator</h3>
+                <div class="input-group">
+                    <label>Construction Region:</label>
                     <select id="region" onchange="updateCostEstimate()">
-                        <option value="tier1">一线城市</option>
-                        <option value="tier2">二线城市</option>
-                        <option value="tier3">三线城市</option>
+                        <option value="tier1">Tier 1 City</option>
+                        <option value="tier2">Tier 2 City</option>
+                        <option value="tier3">Tier 3 City</option>
                     </select>
                 </div>
                 
                 <div class="cost-breakdown">
                     <div class="cost-item">
-                        <span>土地与建设</span>
+                        <span>Land & Construction</span>
                         <span id="constructionCost">$4.2M</span>
                     </div>
                     <div class="cost-item">
-                        <span>机械与自动化</span>
+                        <span>Machinery & Automation</span>
                         <span id="machineryCost">$9.1M</span>
                     </div>
                     <div class="cost-item">
-                        <span>应急费用 (15%)</span>
+                        <span>Contingency (15%)</span>
                         <span id="contingencyCost">$2.0M</span>
                     </div>
                     <div class="cost-item">
-                        <span>总初始投资</span>
+                        <span>Total Initial Investment</span>
                         <span id="totalInvestment">$15.3M</span>
                     </div>
                 </div>
                 
-                <button class="btn" onclick="generateBoE()">生成详细预算报告</button>
+                <button class="btn" onclick="generateBoE()">Generate Detailed Budget Report</button>
             </div>
 
-            <!-- 时间规划器 -->
+            <!-- Time Planner -->
             <div class="module">
-                <h3>📅 时间规划器</h3>
+                <h3>📅 Time Planner</h3>
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="timeline-date">1-2月</div>
-                        <div>场地评估与设计审批</div>
+                        <div class="timeline-date">Jan-Feb</div>
+                        <div>Site Assessment & Design Approval</div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-date">3-4月</div>
-                        <div>预算最终确定</div>
+                        <div class="timeline-date">Mar-Apr</div>
+                        <div>Budget Finalization</div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-date">5-10月</div>
-                        <div>厂房建设</div>
+                        <div class="timeline-date">May-Oct</div>
+                        <div>Factory Construction</div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-date">11-12月</div>
-                        <div>设备安装与调试</div>
+                        <div class="timeline-date">Nov-Dec</div>
+                        <div>Equipment Installation & Testing</div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-date">次年1月</div>
-                        <div>试生产启动</div>
+                        <div class="timeline-date">Next Jan</div>
+                        <div>Trial Production Launch</div>
                     </div>
                 </div>
                 
                 <div class="progress-bar">
                     <div class="progress-fill" style="width: 25%"></div>
                 </div>
-                <p style="margin-top: 10px; text-align: center; color: #666;">当前进度: 25% (设计阶段)</p>
+                <p style="margin-top: 10px; text-align: center; color: #666;">Current Progress: 25% (Design Phase)</p>
             </div>
 
-            <!-- 扩展场景模拟器 -->
+            <!-- Expansion Scenario Simulator -->
             <div class="module">
-                <h3>🚀 扩展场景模拟器</h3>
+                <h3>🚀 Expansion Scenario Simulator</h3>
                 <div class="expansion-options">
                     <div class="expansion-option" onclick="toggleExpansion('frames')">
                         <input type="checkbox" id="frameProduction">
-                        <label>无人机机架生产线 (+800 m², +$2.2M)</label>
+                        <label>Drone Frame Production Line (+800 m², +$2.2M)</label>
                     </div>
                     <div class="expansion-option" onclick="toggleExpansion('battery')">
                         <input type="checkbox" id="batteryLine">
-                        <label>电池组装线 (+500 m², +$3.5M)</label>
+                        <label>Battery Assembly Line (+500 m², +$3.5M)</label>
                     </div>
                     <div class="expansion-option" onclick="toggleExpansion('testing')">
                         <input type="checkbox" id="testingFacility">
-                        <label>高级测试设施 (+300 m², +$1.8M)</label>
+                        <label>Advanced Testing Facility (+300 m², +$1.8M)</label>
                     </div>
                 </div>
                 
                 <div class="alert">
-                    <strong>影响分析:</strong>
-                    <br>• 产能提升: <span id="capacityIncrease">+0</span> 台/月
-                    <br>• ROI 延长: <span id="roiExtension">+0</span> 个月
-                    <br>• 总投资: <span id="expandedInvestment">$15.3M</span>
+                    <strong>Impact Analysis:</strong>
+                    <br>• Capacity Increase: <span id="capacityIncrease">+0</span> units/month
+                    <br>• ROI Extension: <span id="roiExtension">+0</span> months
+                    <br>• Total Investment: <span id="expandedInvestment">$15.3M</span>
                 </div>
             </div>
 
-            <!-- 资源与合规工具包 -->
+            <!-- Resources & Compliance Toolkit -->
             <div class="module">
-                <h3>📋 资源与合规工具包</h3>
+                <h3>📋 Resources & Compliance Toolkit</h3>
                 <table class="output-table">
                     <tr>
-                        <th>要求类型</th>
-                        <th>标准</th>
+                        <th>Requirement Type</th>
+                        <th>Standard</th>
                     </tr>
                     <tr>
-                        <td>照明</td>
-                        <td>300-500 lux (精密区), 200 lux (装配区)</td>
+                        <td>Lighting</td>
+                        <td>300-500 lux (Precision Area), 200 lux (Assembly Area)</td>
                     </tr>
                     <tr>
-                        <td>洁净度</td>
-                        <td>ISO Class 7 (装配), ISO Class 5 (PCB)</td>
+                        <td>Cleanliness</td>
+                        <td>ISO Class 7 (Assembly), ISO Class 5 (PCB)</td>
                     </tr>
                     <tr>
-                        <td>安全</td>
-                        <td>电机支架减振 (SC3 橡胶)</td>
+                        <td>Safety</td>
+                        <td>Motor Mount Vibration Damping (SC3 Rubber)</td>
                     </tr>
                     <tr>
-                        <td>温度控制</td>
+                        <td>Temperature Control</td>
                         <td>20-24°C ±2°C</td>
                     </tr>
                 </table>
                 
-                <button class="btn btn-secondary" onclick="downloadChecklist()">下载合规检查清单</button>
-                <button class="btn btn-secondary" onclick="generateReport()">生成完整报告</button>
+                <button class="btn btn-secondary" onclick="downloadChecklist()">Download Compliance Checklist</button>
+                <button class="btn btn-secondary" onclick="generateReport()">Generate Complete Report</button>
             </div>
 
-            <!-- 技术栈推荐 -->
+            <!-- Technology Stack Recommendations -->
             <div class="module">
-                <h3>⚙️ 技术栈推荐</h3>
+                <h3>⚙️ Technology Stack Recommendations</h3>
                 <div style="background: #f8f9fa; padding: 15px; border-radius: 10px;">
-                    <p><strong>前端:</strong> React.js + D3.js (交互图表)</p>
-                    <p><strong>后端:</strong> Node.js + MongoDB (成本/时间数据)</p>
-                    <p><strong>集成:</strong> Autodesk Navisworks API (4D可视化)</p>
-                    <p><strong>部署:</strong> AWS/阿里云 + Docker</p>
+                    <p><strong>Frontend:</strong> React.js + D3.js (Interactive Charts)</p>
+                    <p><strong>Backend:</strong> Node.js + MongoDB (Cost/Time Data)</p>
+                    <p><strong>Integration:</strong> Autodesk Navisworks API (4D Visualization)</p>
+                    <p><strong>Deployment:</strong> AWS/Alibaba Cloud + Docker</p>
                 </div>
                 
                 <div class="alert" style="margin-top: 15px;">
-                    <strong>为什么这样设计:</strong>
-                    <br>• 符合价值流映射(VSM)原则，减少浪费
-                    <br>• 使用预算基础(BoE)确保成本透明度
-                    <br>• 支持多层物流规划，适应无人机组件工作流
+                    <strong>Why This Design:</strong>
+                    <br>• Follows Value Stream Mapping (VSM) principles to reduce waste
+                    <br>• Uses Basis of Estimate (BoE) to ensure cost transparency
+                    <br>• Supports multi-level logistics planning for drone component workflows
                 </div>
             </div>
         </div>
 
         <div style="text-align: center; margin-top: 40px;">
-            <button class="btn" onclick="launchPrototype()">启动原型</button>
-            <button class="btn btn-secondary" onclick="downloadTemplate()">下载完整BoE模板</button>
+            <button class="btn" onclick="launchPrototype()">Launch Prototype</button>
+            <button class="btn btn-secondary" onclick="downloadTemplate()">Download Complete BoE Template</button>
         </div>
     </div>
 
     <script>
-        // 工厂配置更新
+        // Factory configuration update
         function updateFactoryConfig() {
             const target = document.getElementById('productionTarget').value;
             const layout = document.getElementById('layoutType').value;
             
-            const baseArea = Math.round(target * 0.07); // 每台需要0.07平方米
-            const area = layout === 'multi' ? baseArea * 0.8 : baseArea; // 多层布局节省20%空间
+            const baseArea = Math.round(target * 0.07); // 0.07 m² per unit
+            const area = layout === 'multi' ? baseArea * 0.8 : baseArea; // Multi-floor layout saves 20% space
             
             document.getElementById('totalArea').textContent = `${area.toLocaleString()} m²`;
             document.getElementById('powerCapacity').textContent = `${Math.round(target * 0.033)} kW`;
-            document.getElementById('expansionReserve').textContent = `${Math.round(area * 0.2)} m² (20% 缓冲)`;
+            document.getElementById('expansionReserve').textContent = `${Math.round(area * 0.2)} m² (20% Buffer)`;
         }
 
         // 成本估算更新
@@ -539,9 +645,60 @@
             alert('正在下载BoE模板...\n\n模板包含:\n• Excel成本计算表\n• 项目时间表\n• 风险评估矩阵\n• 供应商评估表');
         }
 
-        // 初始化
+        // Equipment configuration update
+        function updateEquipmentConfig() {
+            const cncCount = document.getElementById('cncCount').value;
+            const assemblyLines = document.getElementById('assemblyLines').value;
+            const qcEquipment = document.getElementById('qcEquipment').value;
+            
+            const cncTotal = cncCount * 45;
+            const assemblyTotal = assemblyLines * 25;
+            const qcPrice = qcEquipment === 'advanced' ? 120 : 80;
+            const equipmentTotal = cncTotal + assemblyTotal + qcPrice;
+            
+            document.getElementById('cncCountDisplay').textContent = cncCount;
+            document.getElementById('assemblyLinesDisplay').textContent = assemblyLines;
+            document.getElementById('cncTotal').textContent = cncTotal;
+            document.getElementById('assemblyTotal').textContent = assemblyTotal;
+            document.getElementById('qcPrice').textContent = qcPrice;
+            document.getElementById('qcTotal').textContent = qcPrice;
+            document.getElementById('equipmentTotal').innerHTML = `<strong>${equipmentTotal} (10k USD)</strong>`;
+            
+            updateInvestmentCalc();
+        }
+
+        // Investment calculation update
+        function updateInvestmentCalc() {
+            const area = parseInt(document.getElementById('totalArea').textContent.replace(/[^0-9]/g, ''));
+            const landCost = parseFloat(document.getElementById('landCost').value);
+            const constructionCost = parseFloat(document.getElementById('constructionCost').value);
+            const operatingMonths = parseInt(document.getElementById('operatingMonths').value);
+            
+            const landTotal = Math.round(area * landCost);
+            const constructionTotal = Math.round(area * constructionCost);
+            const equipmentCost = parseInt(document.getElementById('equipmentTotal').textContent.replace(/[^0-9]/g, ''));
+            const operatingCapital = Math.round(operatingMonths * 80); // 80 (10k USD)/month operating cost
+            
+            const totalInvestment = landTotal + constructionTotal + equipmentCost + operatingCapital;
+            
+            document.getElementById('landTotal').textContent = landTotal.toLocaleString();
+            document.getElementById('constructionTotal').textContent = constructionTotal.toLocaleString();
+            document.getElementById('equipmentInvestment').textContent = equipmentCost.toLocaleString();
+            document.getElementById('operatingCapital').textContent = operatingCapital.toLocaleString();
+            document.getElementById('totalInvestment').innerHTML = `<strong>${totalInvestment.toLocaleString()} (10k USD)</strong>`;
+            
+            // Update percentages
+            document.getElementById('landPercent').textContent = `${((landTotal/totalInvestment)*100).toFixed(1)}%`;
+            document.getElementById('constructionPercent').textContent = `${((constructionTotal/totalInvestment)*100).toFixed(1)}%`;
+            document.getElementById('equipmentPercent').textContent = `${((equipmentCost/totalInvestment)*100).toFixed(1)}%`;
+            document.getElementById('operatingPercent').textContent = `${((operatingCapital/totalInvestment)*100).toFixed(1)}%`;
+        }
+
+        // Initialize
         updateFactoryConfig();
         updateCostEstimate();
+        updateEquipmentConfig();
+        updateInvestmentCalc();
     </script>
 </body>
 </html>

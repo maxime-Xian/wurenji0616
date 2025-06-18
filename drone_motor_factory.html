@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#667eea">
+    <title>无人机电机工厂投资规划</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .header p {
+                font-size: 1em;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .card {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .card h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 20px 0 15px 0;
+        }
+        
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .spec-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .spec-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .cost-table th,
+        .cost-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .cost-table th {
+            background: #667eea;
+            color: white;
+        }
+        
+        .cost-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .timeline-item {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 5px solid #764ba2;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: #764ba2;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .highlight {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .english-content {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="language-toggle" onclick="toggleLanguage()">English</button>
+    
+    <div class="container">
+        <!-- 中文内容 -->
+        <div id="chinese-content">
+            <div class="header">
+                <h1>🚁 无人机电机工厂投资规划</h1>
+                <p>月产5万件电机的专业制造基地建设方案</p>
+            </div>
+            
+            <div class="card">
+                <h2>📏 生产车间规格要求</h2>
+                
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <h4>🏭 厂房面积与布局</h4>
+                        <ul>
+                            <li><strong>生产车间总面积:</strong> 15,000-20,000平方米</li>
+                            <li><strong>层高:</strong> 6-8米</li>
+                            <li><strong>多层布局:</strong> 生产线在一层，仓储办公在二层</li>
+                            <li><strong>功能分区:</strong> 生产区、质检区、仓储区、办公区</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <h4>⚡ 电力系统配置</h4>
+                        <ul>
+                            <li><strong>总功率需求:</strong> 2,000-3,000千瓦</li>
+                            <li><strong>配电系统:</strong> 三相电力系统，380V/220V</li>
+                            <li><strong>备用电源:</strong> 500千瓦柴油发电机组</li>
+                            <li><strong>年用电量:</strong> 约1,900万千瓦时</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <h4>🌟 环境要求</h4>
+                        <ul>
+                            <li><strong>照明标准:</strong> 500-800勒克斯，LED节能照明</li>
+                            <li><strong>清洁等级:</strong> ISO 14644-1 Class 8级洁净度</li>
+                            <li><strong>温湿度控制:</strong> 温度20-25°C，湿度45-65%</li>
+                            <li><strong>通风系统:</strong> 每小时换气6-10次</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>💰 投资成本估算</h2>
+                
+                <h3>初期投资明细</h3>
+                <table class="cost-table">
+                    <thead>
+                        <tr>
+                            <th>投资项目</th>
+                            <th>金额（万元人民币）</th>
+                            <th>备注</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>厂房建设/租赁</td>
+                            <td>3,000-5,000</td>
+                            <td>包含基础设施建设</td>
+                        </tr>
+                        <tr>
+                            <td>生产设备</td>
+                            <td>8,000-12,000</td>
+                            <td>CNC、装配线、测试设备等</td>
+                        </tr>
+                        <tr>
+                            <td>原材料库存</td>
+                            <td>2,000</td>
+                            <td>3个月库存</td>
+                        </tr>
+                        <tr>
+                            <td>研发投入</td>
+                            <td>1,500</td>
+                            <td>技术开发与创新</td>
+                        </tr>
+                        <tr>
+                            <td>流动资金</td>
+                            <td>3,000</td>
+                            <td>运营周转资金</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="highlight">
+                    💎 总投资金额: 17,500-23,500万元人民币
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>⏱️ 建设时间规划</h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>第1阶段: 设计规划 (3-4个月)</h4>
+                        <p>工厂设计、设备选型、环评审批</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>第2阶段: 厂房建设 (8-12个月)</h4>
+                        <p>土建施工、基础设施建设</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>第3阶段: 设备安装 (6-8个月)</h4>
+                        <p>生产设备采购、安装、调试</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>第4阶段: 试产调试 (2-3个月)</h4>
+                        <p>设备调试、人员培训、试生产</p>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    🚀 总建设周期: 18-24个月
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>📈 扩展规划</h2>
+                
+                <h3>垂直整合扩展</h3>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <h4>🔧 无人机框架生产</h4>
+                        <p>增加碳纤维成型设备<br><strong>投资: 5,000万元</strong></p>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <h4>💻 电子控制系统</h4>
+                        <p>建设SMT生产线<br><strong>投资: 3,000万元</strong></p>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <h4>🔬 总装测试线</h4>
+                        <p>无人机整机装配<br><strong>投资: 2,000万元</strong></p>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    🎯 扩展总投资: 10,000万元 | 产能提升至月产10万件
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>👥 人员配置</h2>
+                
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <h4>👷 生产工人</h4>
+                        <p>200-300人</p>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <h4>🔬 技术工程师</h4>
+                        <p>50-80人</p>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <h4>🔍 质检人员</h4>
+                        <p>30-40人</p>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <h4>📊 管理人员</h4>
+                        <p>20-30人</p>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    👨‍💼 总人数: 300-450人
+                </div>
+            </div>
+        </div>
+        
+        <!-- 英文内容 -->
+        <div id="english-content" class="english-content">
+            <div class="header">
+                <h1>🚁 Drone Motor Factory Investment Plan</h1>
+                <p>Professional Manufacturing Base for 50,000 Motors Monthly Production</p>
+            </div>
+            
+            <div class="card">
+                <h2>📏 Production Facility Specifications</h2>
+                
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <h4>🏭 Factory Area and Layout</h4>
+                        <ul>
+                            <li><strong>Total Production Floor Area:</strong> 15,000-20,000 sqm</li>
+                            <li><strong>Ceiling Height:</strong> 6-8 meters</li>
+                            <li><strong>Multi-floor Layout:</strong> Production on 1st floor, storage & office on 2nd</li>
+                            <li><strong>Functional Zones:</strong> Production, QC, warehouse, office areas</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <h4>⚡ Electrical System Configuration</h4>
+                        <ul>
+                            <li><strong>Total Power Requirements:</strong> 2,000-3,000 kW</li>
+                            <li><strong>Power Distribution:</strong> Three-phase, 380V/220V</li>
+                            <li><strong>Backup Power:</strong> 500kW diesel generator</li>
+                            <li><strong>Annual Consumption:</strong> ~19 million kWh</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <h4>🌟 Environmental Requirements</h4>
+                        <ul>
+                            <li><strong>Lighting Standards:</strong> 500-800 lux, LED lighting</li>
+                            <li><strong>Cleanliness Level:</strong> ISO 14644-1 Class 8</li>
+                            <li><strong>Climate Control:</strong> 20-25°C, 45-65% humidity</li>
+                            <li><strong>Ventilation:</strong> 6-10 air changes per hour</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>💰 Investment Cost Estimation</h2>
+                
+                <h3>Initial Investment Breakdown</h3>
+                <table class="cost-table">
+                    <thead>
+                        <tr>
+                            <th>Investment Item</th>
+                            <th>Amount (Million RMB)</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Factory Construction/Lease</td>
+                            <td>30-50</td>
+                            <td>Including infrastructure</td>
+                        </tr>
+                        <tr>
+                            <td>Production Equipment</td>
+                            <td>80-120</td>
+                            <td>CNC, assembly lines, testing equipment</td>
+                        </tr>
+                        <tr>
+                            <td>Raw Material Inventory</td>
+                            <td>20</td>
+                            <td>3-month inventory</td>
+                        </tr>
+                        <tr>
+                            <td>R&D Investment</td>
+                            <td>15</td>
+                            <td>Technology development</td>
+                        </tr>
+                        <tr>
+                            <td>Working Capital</td>
+                            <td>30</td>
+                            <td>Operational funds</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="highlight">
+                    💎 Total Investment: 175-235 Million RMB
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>⏱️ Construction Timeline</h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Phase 1: Design & Planning (3-4 months)</h4>
+                        <p>Factory design, equipment selection, environmental approval</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>Phase 2: Factory Construction (8-12 months)</h4>
+                        <p>Civil construction, infrastructure development</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>Phase 3: Equipment Installation (6-8 months)</h4>
+                        <p>Equipment procurement, installation, commissioning</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>Phase 4: Testing & Trial Production (2-3 months)</h4>
+                        <p>Equipment testing, staff training, trial production</p>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    🚀 Total Construction Period: 18-24 months
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>📈 Expansion Plans</h2>
+                
+                <h3>Vertical Integration Expansion</h3>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <h4>🔧 Drone Frame Production</h4>
+                        <p>Add carbon fiber molding equipment<br><strong>Investment: 50 Million RMB</strong></p>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <h4>💻 Electronic Control Systems</h4>
+                        <p>Build SMT production line<br><strong>Investment: 30 Million RMB</strong></p>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <h4>🔬 Final Assembly Line</h4>
+                        <p>Complete drone assembly<br><strong>Investment: 20 Million RMB</strong></p>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    🎯 Total Expansion Investment: 100 Million RMB | Capacity: 100K units/month
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>👥 Staffing Requirements</h2>
+                
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <h4>👷 Production Workers</h4>
+                        <p>200-300 people</p>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <h4>🔬 Technical Engineers</h4>
+                        <p>50-80 people</p>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <h4>🔍 Quality Control</h4>
+                        <p>30-40 people</p>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <h4>📊 Management Staff</h4>
+                        <p>20-30 people</p>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    👨‍💼 Total Staff: 300-450 people
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleLanguage() {
+            const chineseContent = document.getElementById('chinese-content');
+            const englishContent = document.getElementById('english-content');
+            const toggleButton = document.querySelector('.language-toggle');
+            
+            if (chineseContent.style.display === 'none') {
+                chineseContent.style.display = 'block';
+                englishContent.style.display = 'none';
+                toggleButton.textContent = 'English';
+            } else {
+                chineseContent.style.display = 'none';
+                englishContent.style.display = 'block';
+                toggleButton.textContent = '中文';
+            }
+        }
+        
+        // 添加滚动动画效果
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                const cardVisible = 150;
+                
+                if (cardTop < window.innerHeight - cardVisible) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        
+        // 初始化卡片动画
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+            });
+            
+            // 触发初始动画
+            setTimeout(() => {
+                window.dispatchEvent(new Event('scroll'));
+            }, 100);
+        });
+    </script>
+</body>
+</html>
